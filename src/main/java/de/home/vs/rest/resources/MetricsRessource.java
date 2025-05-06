@@ -9,8 +9,9 @@ import java.io.StringWriter;
 
 @Path("/metrics")
 public class MetricsRessource {
+
     @GET
-    @Produces("text/plain; version=0.0.4; charset=utf-8")
+    @Produces("text/plain; version=0.0.4; charset=utf-8")  // Richtiger Media Type
     public String getMetrics() {
         StringWriter writer = new StringWriter();
         try {
