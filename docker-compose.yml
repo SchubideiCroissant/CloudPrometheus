@@ -1,10 +1,20 @@
-version: '3.8'
-
 services:
+  rest-service:
+    build: .  # Dockerfile im aktuellen Verzeichnis verwenden
+    ports:
+      - "8080:8080"  # REST-Service erreichbar auf Port 8080
+    networks:
+      - monitoring
+
   prometheus:
     image: prom/prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - /etc/localtime:/etc/localtime:ro
     ports:
-      - "9090:9090"
+      - "9090:9090"  # Prometheus UI auf Port 9090
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
