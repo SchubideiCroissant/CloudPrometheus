@@ -1,4 +1,4 @@
-package de.home.vs.rest.prometheus;
+package de.home.vs.rest.resources;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.common.TextFormat;
 import javax.ws.rs.*;
@@ -10,7 +10,7 @@ import java.io.StringWriter;
 @Path("/metrics")
 public class MetricsRessource {
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces("text/plain; version=0.0.4; charset=utf-8")
     public String getMetrics() {
         StringWriter writer = new StringWriter();
         try {
