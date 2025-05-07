@@ -1,10 +1,27 @@
-version: '3.8'
-
 services:
+  rest-service:
+    build: .  # Dockerfile im aktuellen Verzeichnis verwenden
+    ports:
+      - "8080:8080"  # REST-Service erreichbar auf Port 8080
+    networks:
+      - monitoring
+
   prometheus:
     image: prom/prometheus
-    container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus  # Persistente Daten
     ports:
-      - "9090:9090"
+      - "9090:9090"  # Prometheus UI auf Port 9090
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=7d'
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  prometheus_data:

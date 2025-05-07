@@ -2,6 +2,7 @@ package de.home.vs.rest.resources;
 
 import de.home.vs.rest.model.Artikel;
 import de.home.vs.rest.model.ArtikelVerwaltung;
+import de.home.vs.rest.prometheus.MetricsCollector;
 
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -20,6 +21,7 @@ public class ArtikelRessource {
     public Response GetArtikelById(@PathParam("id") int id) {
         JsonObjectBuilder job = javax.json.Json.createObjectBuilder();
         Artikel a = av.getArtikelById(id);
+        MetricsCollector.incArtikelRequests(); // Prometheus
         return getResponse(job, a);
     }
 
@@ -40,6 +42,7 @@ public class ArtikelRessource {
             jab.add(sjob);
         }
         job.add("artikel", jab);
+        MetricsCollector.incArtikelRequests(); // Prometheus
         return Response
                 .status(Response.Status.OK)
                 .entity(job.build())
