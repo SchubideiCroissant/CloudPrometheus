@@ -33,8 +33,12 @@ public class RestService
 
         DataSource ds = DataSource.getInstance();
         ds.prefillData();
-        ArtikelVerwaltung a = ArtikelVerwaltung.getInstance();
-        BestellungsVerwaltung b = BestellungsVerwaltung.getInstance();
+        CustomerVerwaltung.getInstance();
+        ArtikelVerwaltung.getInstance();
+        BestellungsVerwaltung.getInstance();
+        ArtikelVerwaltung.getInstance();
+
+
 
         try {
             server.start();

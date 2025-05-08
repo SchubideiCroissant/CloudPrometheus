@@ -10,12 +10,16 @@ public class BestellungsVerwaltung {
 
     private BestellungsVerwaltung() {
         ArtikelVerwaltung av = ArtikelVerwaltung.getInstance();
+        CustomerVerwaltung.getInstance().addCustomer("Rias","Gremory");
+        CustomerVerwaltung.getInstance().addCustomer("Akeno","Himejima");
+        Customer customer = CustomerVerwaltung.getInstance().getCustomerById(0);
+
         List<Bestellposten> bestellung1 = new ArrayList<>();
         Bestellposten a = new Bestellposten(av.getArtikelById(0),10);
         Bestellposten b = new Bestellposten(av.getArtikelById(1),2);
         bestellung1.add(a);
         bestellung1.add(b);
-        addBestellung(bestellung1);
+        addBestellung(bestellung1, customer);
 
 
     }
@@ -27,8 +31,8 @@ public class BestellungsVerwaltung {
         return instance;
     }
 
-    public Bestellung addBestellung(List<Bestellposten> posten) {
-        Bestellung b = new Bestellung(id++, posten);
+    public Bestellung addBestellung(List<Bestellposten> posten, Customer customer) {
+        Bestellung b = new Bestellung(id++, posten, customer);
         bestellungen.put(b.getBestellnummer(), b);
         return b;
     }

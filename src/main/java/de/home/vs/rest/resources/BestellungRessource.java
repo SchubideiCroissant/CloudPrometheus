@@ -11,20 +11,30 @@ import java.util.*;
 @Path("bestellungen")
 public class BestellungRessource {
 
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addBestellung(JsonObject input) {
+        ArtikelVerwaltung av = ArtikelVerwaltung.getInstance();
+        CustomerVerwaltung cv = CustomerVerwaltung.getInstance();
+        Customer c = cv.getCustomerById(input.getInt("customerId"));
+
         if (!input.containsKey("artikel")) {
             JsonObject error = Json.createObjectBuilder()
                     .add("error", "Bestellung benötigt eine 'artikel'-Liste.")
                     .build();
             return Response.status(Response.Status.BAD_REQUEST).entity(error).build();
         }
+        if (c == null) {
+            JsonObject error = Json.createObjectBuilder()
+                    .add("error", "Kunde mit ID " + input.getInt("customerId") + " nicht gefunden.")
+                    .build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(error).build();
+        }
 
         JsonArray postenArray = input.getJsonArray("artikel");
         List<Bestellposten> posten = new ArrayList<>();
-        ArtikelVerwaltung av = ArtikelVerwaltung.getInstance();
 
         for (JsonValue v : postenArray) {
             JsonObject obj = v.asJsonObject();
@@ -38,9 +48,12 @@ public class BestellungRessource {
             posten.add(new Bestellposten(a, menge));
         }
 
-        Bestellung b = BestellungsVerwaltung.getInstance().addBestellung(posten);
+        Bestellung b = BestellungsVerwaltung.getInstance().addBestellung(posten, c);
 
         JsonObjectBuilder response = Json.createObjectBuilder()
+                .add("customerId", c.getId())
+                .add("vorname", b.getCustomer().getFirstName())
+                .add("nachname", b.getCustomer().getFamilyName())
                 .add("bestellnummer", b.getBestellnummer())
                 .add("zeit", b.getZeit().toString());
 
@@ -55,6 +68,7 @@ public class BestellungRessource {
 
         for (Bestellung b : alle) {
             arrayBuilder.add(Json.createObjectBuilder()
+                    .add("customerId",b.getCustomer().getId() )
                     .add("bestellnummer", b.getBestellnummer())
                     .add("zeit", b.getZeit().toString())
             );
@@ -96,6 +110,7 @@ public class BestellungRessource {
         }
 
         JsonObject result = Json.createObjectBuilder()
+                .add("customerId", bestellung.getCustomer().getId())
                 .add("bestellnummer", bestellung.getBestellnummer())
                 .add("zeit", bestellung.getZeit().toString())
                 .add("artikel", postenArray)

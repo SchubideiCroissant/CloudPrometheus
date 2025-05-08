@@ -6,13 +6,16 @@ import java.util.List;
 public class Bestellung {
     private int bestellnummer;
     private LocalDateTime zeit = LocalDateTime.now();
+    private Customer customer ;
+
     private List<Bestellposten> artikelMitMenge;
 
     // Konstruktor
-    public Bestellung(int bestellnummer, List<Bestellposten> artikelMitMenge) {
+    public Bestellung(int bestellnummer, List<Bestellposten> artikelMitMenge, Customer customer) {
         this.bestellnummer = bestellnummer;
-        this.zeit = LocalDateTime.now();
+        this.customer = customer;
         this.artikelMitMenge = artikelMitMenge;
+        this.zeit = LocalDateTime.now();
     }
 
     // Getter & Setter
@@ -27,6 +30,9 @@ public class Bestellung {
 
     public void setZeit(LocalDateTime zeit) {
         this.zeit = zeit;
+    }
+    public Customer getCustomer() {
+        return customer;
     }
 
     public List<Bestellposten> getPosten() {
