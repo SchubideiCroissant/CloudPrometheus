@@ -9,3 +9,13 @@ groups:
         annotations:
           summary: "Instance {{ $labels.instance }} is down"
           description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute."
+
+
+      - alert: HighRequestRate
+        expr: rate(http_get_requests_total[1m]) > 100
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hohe Anfragerate bei {{ $labels.instance }}"
+          description: "{{ $labels.instance }} verarbeitet über 100 HTTP-Anfragen pro Sekunde."
