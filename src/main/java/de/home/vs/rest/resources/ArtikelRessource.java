@@ -21,7 +21,6 @@ public class ArtikelRessource {
     public Response GetArtikelById(@PathParam("id") int id) {
         JsonObjectBuilder job = javax.json.Json.createObjectBuilder();
         Artikel a = av.getArtikelById(id);
-        MetricsCollector.incArtikelRequests(); // Prometheus
         return getResponse(job, a);
     }
 
@@ -42,7 +41,6 @@ public class ArtikelRessource {
             jab.add(sjob);
         }
         job.add("artikel", jab);
-        MetricsCollector.incArtikelRequests(); // Prometheus
         return Response
                 .status(Response.Status.OK)
                 .entity(job.build())

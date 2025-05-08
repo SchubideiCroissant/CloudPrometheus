@@ -12,7 +12,7 @@ groups:
 
 
       - alert: HighRequestRate
-        expr: rate(http_get_requests_total[1m]) > 100
+        expr: sum(rate(http_get_requests_total[1m])) > (100 / 60)
         for: 1m
         labels:
           severity: warning
