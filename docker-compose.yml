@@ -15,6 +15,7 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
+      - ./alert.rules.yml:/etc/prometheus/alert.rules.yml
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus  # Persistente Daten
     ports:
