@@ -22,10 +22,12 @@ public class ArtikelVerwaltung {
         return instance;
     }
 
-    public void addArtikel(String name, String details, double preis, int lagerbestand) {
+    public Artikel addArtikel(String name, String details, double preis, int lagerbestand) {
         Artikel artikel = new Artikel(id, name, details, preis, lagerbestand);
         artikelMap.put(id, artikel);
         id++;
+        return artikel;
+
     }
 
     public List<Artikel> getAlleArtikel() {

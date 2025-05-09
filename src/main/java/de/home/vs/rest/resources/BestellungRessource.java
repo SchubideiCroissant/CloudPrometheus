@@ -11,13 +11,15 @@ import java.util.*;
 @Path("bestellungen")
 public class BestellungRessource {
 
+    ArtikelVerwaltung av = ArtikelVerwaltung.getInstance();
+    CustomerVerwaltung cv = CustomerVerwaltung.getInstance();
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addBestellung(JsonObject input) {
-        ArtikelVerwaltung av = ArtikelVerwaltung.getInstance();
-        CustomerVerwaltung cv = CustomerVerwaltung.getInstance();
+        /*ArtikelVerwaltung av = ArtikelVerwaltung.getInstance();
+        CustomerVerwaltung cv = CustomerVerwaltung.getInstance(); */
         Customer c = cv.getCustomerById(input.getInt("customerId"));
 
         if (!input.containsKey("artikel")) {
@@ -51,6 +53,7 @@ public class BestellungRessource {
         Bestellung b = BestellungsVerwaltung.getInstance().addBestellung(posten, c);
 
         JsonObjectBuilder response = Json.createObjectBuilder()
+                .add("link","http://localhost:8080/rest/bestellungen/"+ b.getBestellnummer() )
                 .add("customerId", c.getId())
                 .add("vorname", b.getCustomer().getFirstName())
                 .add("nachname", b.getCustomer().getFamilyName())
@@ -68,6 +71,7 @@ public class BestellungRessource {
 
         for (Bestellung b : alle) {
             arrayBuilder.add(Json.createObjectBuilder()
+                    .add("link","http://localhost:8080/rest/bestellungen/"+ b.getBestellnummer() )
                     .add("customerId",b.getCustomer().getId() )
                     .add("bestellnummer", b.getBestellnummer())
                     .add("zeit", b.getZeit().toString())
@@ -99,6 +103,7 @@ public class BestellungRessource {
             Artikel a = bp.getArtikel();
 
             JsonObject artikelJson = Json.createObjectBuilder()
+                    .add("link", "http://localhost:8080/rest/artikel/"+a.getArtikelnummer())
                     .add("artikelnummer", a.getArtikelnummer())
                     .add("name", a.getName())
                     .add("details", a.getDetails())

@@ -33,9 +33,10 @@ public class ArtikelRessource {
 
         for(Artikel a: artikelList) {
             JsonObjectBuilder sjob = javax.json.Json.createObjectBuilder();
+            sjob.add("link", "http://localhost:8080/rest/artikel/"+ a.getArtikelnummer() );
             sjob.add("artikelnummer", a.getArtikelnummer());
             sjob.add("name", a.getName());
-            sjob.add("details", a.getDetails());
+            //sjob.add("details", a.getDetails());
             sjob.add("preis", a.getPreis());
             sjob.add("lagerbestand", a.getLagerbestand());
             jab.add(sjob);
@@ -102,9 +103,10 @@ public class ArtikelRessource {
         int lagerbestand = input.getInt("lagerbestand");
 
         ArtikelVerwaltung av = ArtikelVerwaltung.getInstance();
-        av.addArtikel(name, details, preis, lagerbestand);
+        Artikel a = av.addArtikel(name, details, preis, lagerbestand);
 
         JsonObjectBuilder job = javax.json.Json.createObjectBuilder();
+        job.add("link", "http://localhost:8080/rest/artikel/"+a.getArtikelnummer());
         job.add("message", "Artikel wurde hinzugefügt.");
         return Response.status(Response.Status.CREATED).entity(job.build()).build();
     }
