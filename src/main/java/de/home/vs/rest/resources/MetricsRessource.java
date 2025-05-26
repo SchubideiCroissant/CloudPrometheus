@@ -15,7 +15,7 @@ public class MetricsRessource {
     public String getMetrics() {
         StringWriter writer = new StringWriter();
         try {
-            TextFormat.write004(writer, CollectorRegistry.defaultRegistry.metricFamilySamples());
+            TextFormat.write004(writer, CollectorRegistry.defaultRegistry.metricFamilySamples()); // Alle registrierten Counter
         } catch (IOException e) {
             return "# Fehler beim Schreiben der Metriken: " + e.getMessage();
         }

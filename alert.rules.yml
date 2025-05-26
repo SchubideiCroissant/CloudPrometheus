@@ -18,4 +18,4 @@ groups:
           severity: warning
         annotations:
           summary: "Hohe Anfragerate bei {{ $labels.instance }}"
-          description: "{{ $labels.instance }} verarbeitet über 100 HTTP-Anfragen pro Sekunde."
+          description: "{{ $labels.instance }} verarbeitet über 100 HTTP-Anfragen pro Minute."

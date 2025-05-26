@@ -17,7 +17,5 @@ public class MetricsCollector {
         getRequestsTotal.labels(path).inc();
     }
 
-
-
     // Weitere Metriken folgen hier
 }

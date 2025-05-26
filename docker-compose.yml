@@ -22,10 +22,26 @@ services:
       - "9090:9090"  # Prometheus UI auf Port 9090
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
-      - "--web.enable-lifecycle"
+      - "--web.enable-lifecycle" # um Prometheus zur Laufzeit zu aktualisieren
       - '--storage.tsdb.retention.time=7d'
     networks:
       - monitoring
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"  # Grafana UI
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=4351
+    volumes:
+      - grafana_data:/var/lib/grafana # sichert Dashboards
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
+
 
 networks:
   monitoring:
@@ -33,3 +49,4 @@ networks:
 
 volumes:
   prometheus_data:
+  grafana_data:
