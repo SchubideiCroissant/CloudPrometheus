@@ -1,4 +1,8 @@
 route:
-  receiver: 'default'
+  receiver: 'presentation'
+
 receivers:
-  - name: 'default'
+  - name: 'presentation'
+    webhook_configs:
+      - url: 'http://host.docker.internal:5001/alert'
+        send_resolved: true

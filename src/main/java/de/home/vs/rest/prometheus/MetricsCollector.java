@@ -9,7 +9,7 @@ public class MetricsCollector {
     private static final Counter getRequestsTotal = Counter.build()
             .name("http_get_requests_total")
             .help("Anzahl der HTTP-GET-Requests")
-            .labelNames("path") // Filter orndet später automatisch den Path hinzu
+            .labelNames("path") // Filter ordnet später automatisch den Path hinzu
             .register();
 
 
