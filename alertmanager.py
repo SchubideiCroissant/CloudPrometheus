@@ -1,8 +1,6 @@
 from flask import Flask, request
 import json
 import datetime
-import os
-import pyttsx3
 
 
 app = Flask(__name__)
@@ -20,13 +18,13 @@ def alert():
         print(f"Beschreibung: {a['annotations'].get('description')}")
         print("-" * 60)
     print("============================================================\n")
-    # Optional: Sound abspielen (nur Windows)
-    if os.name == 'nt':
+
+    try:
         import winsound
         winsound.Beep(1000, 300)
-        engine = pyttsx3.init()
-        engine.say("Achtung! Ein Alert wurde ausgelöst.")
-        engine.runAndWait()
+    except ImportError:
+        print("winsound ist nicht verfügbar – wahrscheinlich kein natives Windows.")
+        
     return "", 200
 
 if __name__ == "__main__":
