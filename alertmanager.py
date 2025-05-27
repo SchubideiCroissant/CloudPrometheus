@@ -1,12 +1,18 @@
 from flask import Flask, request
 import json
 import datetime
-
+import winsound
+import pygame
 
 app = Flask(__name__)
 
 @app.route("/alert", methods=["POST"])
 def alert():
+    winsound.Beep(400, 2000)
+    pygame.mixer.init()
+    pygame.mixer.music.load("mp3/alarm.wav")
+    pygame.mixer.music.play()
+
     data = request.json
     time = datetime.datetime.now().strftime("%H:%M:%S")
     print("\n====================  ALERT EMPFANGEN ====================")
@@ -18,14 +24,20 @@ def alert():
         print(f"Beschreibung: {a['annotations'].get('description')}")
         print("-" * 60)
     print("============================================================\n")
-
-    try:
-        import winsound
-        winsound.Beep(1000, 300)
-    except ImportError:
-        print("winsound ist nicht verfügbar – wahrscheinlich kein natives Windows.")
         
     return "", 200
 
 if __name__ == "__main__":
+    """
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    for index, voice in enumerate(voices):
+        print(f"{index}: {voice.name} ({voice.languages})")
+
+    engine.setProperty('rate', 100)
+    engine.say("Achtung! Ein neuer Alarm ist ein gegangen.")
+    engine.runAndWait()
+    """
+
+
     app.run(port=5001)
