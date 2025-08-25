@@ -1,6 +1,7 @@
 # Cloud Prometheus
 ## Projektbeschreibung
-Eine REST-API die im Rahmen eines CLoud Projektes durch einen self-managed Prometheus Server obersivert wird.
+Eine REST-API die im Rahmen eines Cloud Projektes durch einen Self-Managed Prometheus Server obersivert wird.
+
 ## Voraussetzungen
 Stelle sicher, dass folgende Tools installiert sind:
 
@@ -31,5 +32,7 @@ docker compose up
 
 ## Zugriff auf die Dienste
 
-- REST-API: [http://localhost:8080/rest/artikel](http://localhost:8080/rest/artikel)
-- Prometheus: [http://localhost:9090/](http://localhost:9090/)
+[Rest Schnittstelle](http://localhost:8080/rest/artikel/)
+[Prometheus](http://localhost:9090/) 
+[Grafana](http://localhost:3000/)
+[Alertmanager](http://localhost:9093/)
