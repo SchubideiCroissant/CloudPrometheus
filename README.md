@@ -1,7 +1,7 @@
-# CloudPrometheus
-
+# Cloud Prometheus
+## Projektbeschreibung
+Eine REST-API die im Rahmen eines CLoud Projektes durch einen self-managed Prometheus Server obersivert wird.
 ## Voraussetzungen
-
 Stelle sicher, dass folgende Tools installiert sind:
 
 - [Docker](https://www.docker.com/)
